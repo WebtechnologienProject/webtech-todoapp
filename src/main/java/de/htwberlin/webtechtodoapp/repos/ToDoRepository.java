@@ -1,4 +1,7 @@
 package de.htwberlin.webtechtodoapp.repos;
 
-public interface ToDoRepository {
+import de.htwberlin.webtechtodoapp.entities.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ToDoRepository extends JpaRepository<Todo, Long> {
 }
