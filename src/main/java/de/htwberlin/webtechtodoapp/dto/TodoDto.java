@@ -1,37 +1,19 @@
-package de.htwberlin.webtechtodoapp.entities;
+package de.htwberlin.webtechtodoapp.dto;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import de.htwberlin.webtechtodoapp.entities.Category;
 
-@Entity
-public class Todo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class TodoDto {
+
     private Long todoId;
-
-    @Column(name = "title")
     private String title;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "created_time")
-    private LocalDateTime createdTime;
-
-    @Column(name = "category")
     private Category category;
-
-    @Column(name = "done")
     private Boolean isDone;
 
-    public Todo() {
-    }
-
-    public Todo(String title, String description, LocalDateTime createdTime, Category category, Boolean isDone) {
+    public TodoDto(Long todoId, String title, String description, Category category, Boolean isDone) {
+        this.todoId = todoId;
         this.title = title;
         this.description = description;
-        this.createdTime = createdTime;
         this.category = category;
         this.isDone = isDone;
     }
@@ -59,16 +41,6 @@ public class Todo {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-   public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
 
     public Category getCategory() {
         return category;
