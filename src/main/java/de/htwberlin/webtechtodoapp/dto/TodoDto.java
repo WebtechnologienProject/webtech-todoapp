@@ -18,6 +18,9 @@ public class TodoDto {
         this.isDone = isDone;
     }
 
+    public TodoDto() {
+    }
+
     public Long getTodoId() {
         return todoId;
     }
