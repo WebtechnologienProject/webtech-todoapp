@@ -6,7 +6,7 @@ import de.htwberlin.webtechtodoapp.entities.Todo;
 import java.util.List;
 
 public interface ToDoService {
-    Todo create(String title, String description, Category category, Boolean isDone);
+    Todo create(String title, String description, Category category);
 
     Todo update(Long todoId, String title, String description, Category category, Boolean isDone);
 

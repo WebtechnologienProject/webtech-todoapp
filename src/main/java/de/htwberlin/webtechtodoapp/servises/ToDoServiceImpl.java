@@ -28,24 +28,24 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
     @Override
-    public Todo create(String title, String description, Category category, Boolean done){
-        Todo todo = transformedTodo(title, description, category, done);
+    public Todo create(String title, String description, Category category){
+        Todo todo = transformedTodo(title, description, category);
         return toDoRepository.save(todo);
     }
 
-    private Todo transformedTodo(String title, String description, Category category, Boolean done){
+    private Todo transformedTodo(String title, String description, Category category){
         Todo todo = new Todo();
         todo.setTitle(title);
         todo.setDescription(description);
         todo.setCategory(category);
         todo.setCreatedTime(LocalDateTime.now());
-        todo.setDone(done);
         return todo;
     }
 
     public Todo update(Long todoId, String title, String description, Category category, Boolean done) {
-        Todo todo = transformedTodo(title, description, category, done);
+        Todo todo = transformedTodo(title, description, category);
         todo.setTodoId(todoId);
+        todo.setDone(true);
         return toDoRepository.save(todo);
     }
 

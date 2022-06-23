@@ -4,9 +4,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "todos")
 public class Todo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long todoId;
 
@@ -23,17 +24,17 @@ public class Todo {
     private Category category;
 
     @Column(name = "done")
-    private Boolean isDone;
+    private Boolean isDone = false;
 
     public Todo() {
     }
 
-    public Todo(String title, String description, LocalDateTime createdTime, Category category, Boolean isDone) {
+    public Todo(String title, String description, LocalDateTime createdTime, Category category) {
         this.title = title;
         this.description = description;
         this.createdTime = createdTime;
         this.category = category;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 
     public Long getTodoId() {

@@ -34,7 +34,7 @@ public class ToDoController {
 
     @PostMapping
     public ResponseEntity<Todo> create(@RequestBody TodoDto todoDto) {
-        Todo todo = toDoService.create(todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory(), todoDto.getDone());
+        Todo todo = toDoService.create(todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory());
         return ResponseEntity.status(HttpStatus.CREATED).body(todo);
     }
 

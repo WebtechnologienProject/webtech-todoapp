@@ -8,14 +8,14 @@ public class TodoDto {
     private String title;
     private String description;
     private Category category;
-    private Boolean isDone;
+    private Boolean isDone = false;
 
-    public TodoDto(Long todoId, String title, String description, Category category, Boolean isDone) {
+    public TodoDto(Long todoId, String title, String description, Category category) {
         this.todoId = todoId;
         this.title = title;
         this.description = description;
         this.category = category;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 
     public TodoDto() {
