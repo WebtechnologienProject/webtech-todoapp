@@ -2,6 +2,7 @@ package de.htwberlin.webtechtodoapp.servises;
 
 import de.htwberlin.webtechtodoapp.entities.Category;
 import de.htwberlin.webtechtodoapp.entities.Todo;
+import de.htwberlin.webtechtodoapp.repos.CategoryRepository;
 import de.htwberlin.webtechtodoapp.repos.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,15 @@ import java.util.List;
 public class ToDoServiceImpl implements ToDoService{
 
     private final ToDoRepository toDoRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ToDoServiceImpl(ToDoRepository toDoRepository) {
+    public ToDoServiceImpl(ToDoRepository toDoRepository, CategoryRepository categoryRepository) {
         this.toDoRepository = toDoRepository;
+        this.categoryRepository = categoryRepository;
     }
+
+
 
     public List<Todo> getAllTodo() {
         return toDoRepository.findAll();
@@ -38,14 +43,14 @@ public class ToDoServiceImpl implements ToDoService{
         todo.setTitle(title);
         todo.setDescription(description);
         todo.setCategory(category);
-        todo.setCreatedTime(LocalDateTime.now());
         return todo;
     }
 
     public Todo update(Long todoId, String title, String description, Category category, Boolean done) {
         Todo todo = transformedTodo(title, description, category);
         todo.setTodoId(todoId);
-        todo.setDone(true);
+        todo.setCategory(category);
+        todo.setDone(done);
         return toDoRepository.save(todo);
     }
 

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "todos")
 public class Todo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long todoId;
 
@@ -17,10 +17,9 @@ public class Todo {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_time")
-    private LocalDateTime createdTime;
 
-    @Column(name = "category")
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
     private Category category;
 
     @Column(name = "done")
@@ -29,10 +28,9 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(String title, String description, LocalDateTime createdTime, Category category) {
+    public Todo(String title, String description, Category category) {
         this.title = title;
         this.description = description;
-        this.createdTime = createdTime;
         this.category = category;
         this.isDone = false;
     }
@@ -62,21 +60,12 @@ public class Todo {
     }
 
 
-   public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Category priority) {
+        this.category = priority;
     }
 
     public Boolean getDone() {
@@ -86,4 +75,6 @@ public class Todo {
     public void setDone(Boolean done) {
         isDone = done;
     }
+
+
 }

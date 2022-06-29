@@ -7,15 +7,17 @@ public class TodoDto {
     private Long todoId;
     private String title;
     private String description;
-    private Category category;
+    private Long categoryId;
     private Boolean isDone = false;
+    private Category category;
 
-    public TodoDto(Long todoId, String title, String description, Category category) {
+    public TodoDto(Long todoId, String title, String description, Long categoryId, Category category) {
         this.todoId = todoId;
         this.title = title;
         this.description = description;
-        this.category = category;
+        this.categoryId = categoryId;
         this.isDone = false;
+        this.category = category;
     }
 
     public TodoDto() {
@@ -45,12 +47,30 @@ public class TodoDto {
         this.description = description;
     }
 
+//    public Category getPriority() {
+//        return priority;
+//    }
+//
+//    public void setPriority(Category priority) {
+//        this.priority = priority;
+//    }
+
+
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Boolean getDone() {

@@ -2,6 +2,7 @@ package de.htwberlin.webtechtodoapp.servises;
 
 import de.htwberlin.webtechtodoapp.entities.Category;
 import de.htwberlin.webtechtodoapp.entities.Todo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

@@ -1,32 +1,34 @@
-package de.htwberlin.webtechtodoapp.entities;
+package de.htwberlin.webtechtodoapp.dto;
 
-import javax.persistence.*;
+import de.htwberlin.webtechtodoapp.entities.Todo;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "categories")
-public class Category {
+public class CategoryDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryId")
     private Long categoryId;
-
-    @Column(name = "title")
     private String categoryTitle;
 
-
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Todo> todoList;
 
 
-    public Category(Long categoryId, String categoryTitle) {
+    public CategoryDto(Long categoryId, String categoryTitle, List<Todo> todoList) {
         this.categoryId = categoryId;
         this.categoryTitle = categoryTitle;
+        this.todoList = todoList;
     }
 
-    public Category() {}
+    public CategoryDto() {
+    }
+
+    public List<Todo> getTodoList() {
+        return todoList;
+    }
+
+    public void setTodoList(List<Todo> todoList) {
+        this.todoList = todoList;
+    }
 
     public Long getCategoryId() {
         return categoryId;
@@ -43,6 +45,5 @@ public class Category {
     public void setCategoryTitle(String categoryTitle) {
         this.categoryTitle = categoryTitle;
     }
-
 
 }
