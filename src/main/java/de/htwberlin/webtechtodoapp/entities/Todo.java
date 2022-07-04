@@ -25,13 +25,17 @@ public class Todo {
     @Column(name = "done")
     private Boolean isDone = false;
 
+    @Column(name="myDay")
+    private Boolean isMyDay;
+
     public Todo() {
     }
 
-    public Todo(String title, String description, Category category) {
+    public Todo(String title, String description, Category category, Boolean isMyDay) {
         this.title = title;
         this.description = description;
         this.category = category;
+        this.isMyDay = isMyDay;
         this.isDone = false;
     }
 
@@ -66,6 +70,14 @@ public class Todo {
 
     public void setCategory(Category priority) {
         this.category = priority;
+    }
+
+    public Boolean getMyDay() {
+        return isMyDay;
+    }
+
+    public void setMyDay(Boolean myDay) {
+        isMyDay = myDay;
     }
 
     public Boolean getDone() {

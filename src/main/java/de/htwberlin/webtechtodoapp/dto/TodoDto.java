@@ -2,20 +2,28 @@ package de.htwberlin.webtechtodoapp.dto;
 
 import de.htwberlin.webtechtodoapp.entities.Category;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class TodoDto {
 
     private Long todoId;
+    @Size(min = 3, message = "The title must contain 3 or more characters")
+    @NotBlank(message = "The title must be not empty")
     private String title;
     private String description;
-    private Long categoryId;
+
+    private Boolean isMyDay;
     private Boolean isDone = false;
+    @NotNull(message = "Category must be not empty")
     private Category category;
 
-    public TodoDto(Long todoId, String title, String description, Long categoryId, Category category) {
+    public TodoDto(Long todoId, String title, String description, Category category, Boolean isMyDay) {
         this.todoId = todoId;
         this.title = title;
         this.description = description;
-        this.categoryId = categoryId;
+        this.isMyDay = isMyDay;
         this.isDone = false;
         this.category = category;
     }
@@ -47,15 +55,6 @@ public class TodoDto {
         this.description = description;
     }
 
-//    public Category getPriority() {
-//        return priority;
-//    }
-//
-//    public void setPriority(Category priority) {
-//        this.priority = priority;
-//    }
-
-
     public Category getCategory() {
         return category;
     }
@@ -64,13 +63,12 @@ public class TodoDto {
         this.category = category;
     }
 
-
-    public Long getCategoryId() {
-        return categoryId;
+    public Boolean getMyDay() {
+        return isMyDay;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setMyDay(Boolean myDay) {
+        isMyDay = myDay;
     }
 
     public Boolean getDone() {

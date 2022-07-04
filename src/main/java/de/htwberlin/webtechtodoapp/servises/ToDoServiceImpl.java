@@ -23,7 +23,6 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
 
-
     public List<Todo> getAllTodo() {
         return toDoRepository.findAll();
     }
@@ -33,28 +32,35 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
     @Override
-    public Todo create(String title, String description, Category category){
-        Todo todo = transformedTodo(title, description, category);
+    public Todo create(String title, String description, Category category, Boolean isMyDay){
+        Todo todo = transformedTodo(title, description, category, isMyDay);
         return toDoRepository.save(todo);
     }
 
-    private Todo transformedTodo(String title, String description, Category category){
+    private Todo transformedTodo(String title, String description, Category category, Boolean isMyDay){
         Todo todo = new Todo();
         todo.setTitle(title);
         todo.setDescription(description);
         todo.setCategory(category);
+        todo.setMyDay(isMyDay);
         return todo;
     }
 
-    public Todo update(Long todoId, String title, String description, Category category, Boolean done) {
-        Todo todo = transformedTodo(title, description, category);
+    public Todo update(Long todoId, String title, String description, Category category, Boolean isMyDay, Boolean done) {
+        Todo todo = transformedTodo(title, description, category, isMyDay);
         todo.setTodoId(todoId);
         todo.setCategory(category);
         todo.setDone(done);
+        todo.setMyDay(isMyDay);
         return toDoRepository.save(todo);
     }
 
-    public void delete (Long todoId) {
+    public boolean deleteById (Long todoId) {
+        if(!toDoRepository.existsById(todoId)) {
+            return false;
+        }
         toDoRepository.deleteById(todoId);
+        return true;
     }
+
 }

@@ -7,11 +7,14 @@ import de.htwberlin.webtechtodoapp.servises.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/todo")
 public class ToDoController {
 
@@ -31,26 +34,38 @@ public class ToDoController {
     @GetMapping(value = "/{todoId}")
     public ResponseEntity<Todo> getTodoById(@PathVariable("todoId") Long todoId) {
         Todo todo = toDoService.getTodoById(todoId);
-        return ResponseEntity.ok(todo);
+        return todo != null? ResponseEntity.ok(todo) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Todo> create(@RequestBody TodoDto todoDto) {
-        Todo todo = toDoService.create(todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory());
-        return ResponseEntity.status(HttpStatus.CREATED).body(todo);
+    public ResponseEntity<Todo> create(@Valid @RequestBody TodoDto todoDto) {
+        var valid = validate(todoDto);
+        if (valid) {
+            Todo todo = toDoService.create(todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory(), todoDto.getMyDay());
+            return ResponseEntity.status(HttpStatus.CREATED).body(todo);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 
     @PutMapping(value = "/{todoId}")
-    public ResponseEntity<Todo> update(@RequestBody Todo todoDto) {
-        Todo todo = toDoService.update(todoDto.getTodoId(), todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory(), todoDto.getDone());
-        return ResponseEntity.ok(todo);
+    public ResponseEntity<Todo> update(@Valid @RequestBody Todo todoDto) {
+        Todo todo = toDoService.update(todoDto.getTodoId(), todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory(), todoDto.getMyDay(), todoDto.getDone());
+        return todo != null? ResponseEntity.ok(todo) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping(value = "/{todoId}")
-    public void deleteById(@PathVariable("todoId") Long todoId) {
-        toDoService.delete(todoId);
+    public ResponseEntity<Void> deleteById(@PathVariable("todoId") Long todoId) {
+        boolean isOk = toDoService.deleteById(todoId);
+        return isOk? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
+
+    private boolean validate(TodoDto todoDto) {
+        return todoDto.getTitle() != null
+                && !todoDto.getTitle().isBlank()
+                && todoDto.getCategory() != null;
+    }
 
 }
