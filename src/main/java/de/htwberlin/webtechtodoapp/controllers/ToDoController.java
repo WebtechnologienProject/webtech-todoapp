@@ -11,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -38,11 +40,12 @@ public class ToDoController {
     }
 
     @PostMapping
-    public ResponseEntity<Todo> create(@Valid @RequestBody TodoDto todoDto) {
+    public ResponseEntity<Todo> create(@Valid @RequestBody TodoDto todoDto) throws URISyntaxException {
         var valid = validate(todoDto);
         if (valid) {
             Todo todo = toDoService.create(todoDto.getTitle(), todoDto.getDescription(), todoDto.getCategory(), todoDto.getMyDay());
-            return ResponseEntity.status(HttpStatus.CREATED).body(todo);
+            URI uri = new URI("/" + todo.getTodoId());
+            return ResponseEntity.created(uri).header("Access-Control-Expose-Headers", "Location").build();
         } else {
             return ResponseEntity.badRequest().build();
         }
